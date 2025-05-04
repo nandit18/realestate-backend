@@ -1,20 +1,22 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const connectDB = require('./db');
+const dotenv = require('dotenv');
 const cors = require('cors');
-require('dotenv').config(); // Load .env file
 
+dotenv.config();
 const app = express();
 app.use(cors());
-app.use(express.json()); // to read JSON data from frontend
+app.use(express.json());
 
-// Routes placeholder
-// We'll add actual routes here later
+// Connect to MongoDB
+connectDB();
+
+// Sample route
 app.get('/', (req, res) => {
-  res.send('Real Estate API is running ✅');
+  res.send('Backend is live!');
 });
 
-// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
