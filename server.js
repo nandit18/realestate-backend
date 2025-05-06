@@ -1,29 +1,24 @@
 const express = require("express");
-const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./db");
+const sendOtpRoute = require("./routes/sendOtp");
+const verifyOtpRoute = require("./routes/verifyOtp");
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Connect to MongoDB
+app.use(express.json());
 connectDB();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// 👇 This is CRITICAL
+app.use("/api/send-otp", sendOtpRoute);
+app.use("/api/verify-otp", verifyOtpRoute);
 
-// Health check route for Render root URL
+// Optional root route
 app.get("/", (req, res) => {
-  res.send("Backend is working 🚀");
+  res.send("API is running...");
 });
 
-// Routes
-app.use("/api", require("./routes/sendOtp"));
-app.use("/api", require("./routes/verifyOtp"));
-
-// Start server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
