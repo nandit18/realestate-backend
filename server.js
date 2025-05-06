@@ -1,29 +1,27 @@
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./db');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const connectDB = require("./db");
 
-const sendOtpRoute = require('./routes/sendOtp');
-const verifyOtpRoute = require('./routes/verifyOtp');
-
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Connect to MongoDB
+connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
-connectDB();
+// Health check route for Render root URL
+app.get("/", (req, res) => {
+  res.send("Backend is working 🚀");
+});
 
 // Routes
-app.use('/api/send-otp', sendOtpRoute);
-app.use('/api/verify-otp', verifyOtpRoute);
-
-// Test route
-app.get('/api/test', (req, res) => {
-  res.send('TerraMind backend is working!');
-});
+app.use("/api", require("./routes/sendOtp"));
+app.use("/api", require("./routes/verifyOtp"));
 
 // Start server
 app.listen(PORT, () => {
