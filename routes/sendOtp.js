@@ -24,13 +24,13 @@ router.post('/', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
+        user: process.env.EMAIL_USER,  // ✅ Corrected
+        pass: process.env.EMAIL_PASS,  // ✅ Corrected
       },
     });
 
     const mailOptions = {
-      from: process.env.MAIL_USER,
+      from: process.env.EMAIL_USER,
       to: email,
       subject: 'Your TerraMind OTP',
       text: `Hello ${name},\n\nYour OTP for TerraMind is: ${otp}\n\nCheck your spam folder too if you don’t see it.`,
