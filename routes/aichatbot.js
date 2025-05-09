@@ -1,5 +1,6 @@
-const { OpenAI } = require("openai");
+require("dotenv").config(); // 👈 REQUIRED to load .env or Render env vars
 
+const { OpenAI } = require("openai");
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
